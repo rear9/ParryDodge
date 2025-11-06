@@ -89,7 +89,7 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator TutorialSequence()
     {
         inputHandler.SetTutorialMode(true,0);
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(5f);
         
         // --- parry tutorial ---
         

@@ -9,17 +9,28 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button playButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private EventSystem eventSystem;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+
 
     private bool isUsingController = false;
 
     private void Start()
     {
         Cursor.visible = true;
-        playButton.onClick.AddListener(GameManager.Instance.StartGame);
-        quitButton.onClick.AddListener(GameManager.Instance.QuitGame);
-    }
-
-    private void Update()
+        
+        playButton.onClick.AddListener(GameManager.StartGame);
+        quitButton.onClick.AddListener(GameManager.QuitGame);
+        
+        if (AudioManager.Instance != null)
+        {
+            musicSlider.onValueChanged.AddListener(AudioManager.Instance.SetMusicVolume);
+            sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSFXVolume);
+            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", .5f);
+            sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", .5f);
+        }
+    } 
+    void Update()
     {
         // check for controller input (stick movement or button press)
         if (Gamepad.current != null)

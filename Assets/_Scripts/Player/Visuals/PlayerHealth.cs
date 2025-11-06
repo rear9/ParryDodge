@@ -8,7 +8,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float maxHP = 10;
     private float _currentHP;
 
-    [Header("References")]
+    [Header("References")] 
+    [SerializeField] private Sprite deathSprite;
     [SerializeField] private Image hitScreen; // assign red overlay image
     [SerializeField] private float hitScreenDuration = 0.5f;
     
@@ -28,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
         _currentHP = Mathf.Clamp(_currentHP, 0, maxHP);
         if (_ui != null) _ui.UpdateHP(_currentHP, maxHP);
         StartCoroutine(HitFlash());
-        if (_currentHP <= 0) Die();
+        if (_currentHP <= 0) StartCoroutine(Die());
     }
 
     private IEnumerator HitFlash()
@@ -65,8 +66,20 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
-    private void Die() // record death in stats and send player back to main menu for now
+    private IEnumerator Die() // record death in stats and send player back to main menu for now
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.GetComponents<CircleCollider2D>()[1].enabled = false;
+        player.GetComponents<CircleCollider2D>()[0].enabled = false;
+        Time.timeScale = 0;
+        StartCoroutine(AudioManager.Instance.FadeOutMusic(0));
+        AudioManager.PlaySFX(AudioManager.Instance.deathSFX);
+        yield return new WaitForSecondsRealtime(1.5f);
+        if (player != null)
+        {
+            player.GetComponent<SpriteRenderer>().sprite = deathSprite;
+        }
+        yield return new WaitForSecondsRealtime(1f);
         if (StatsManager.Instance != null && _ui != null)
         {
             string currentWave = _ui != null ? _ui.GetCurrentWaveName() : "N/A";
@@ -76,7 +89,8 @@ public class PlayerHealth : MonoBehaviour
         // Return to menu after death
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.ReturnToMenu();
+            GameManager.ReturnToMenu();
+            Time.timeScale = 1;
         }
     }
 }

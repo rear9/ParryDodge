@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using FirstGearGames.SmoothCameraShaker;
 public class Actions : MonoBehaviour
 {
     [SerializeField] private Movement movement;
     [SerializeField] private PlayerColor plrColor;
+    public ShakeData parryShakeData;
     
     [Header("Parry Settings")]
     public float parryWindow;
@@ -62,6 +64,8 @@ public class Actions : MonoBehaviour
     public void ParrySuccess()
     {
         StatsManager.Instance.RecordParry();
+        AudioManager.PlaySFX(AudioManager.Instance.parrySFX);
+        CameraShakerHandler.Shake(parryShakeData);
         _parryHit = true;
     }
     public void StartDodge()

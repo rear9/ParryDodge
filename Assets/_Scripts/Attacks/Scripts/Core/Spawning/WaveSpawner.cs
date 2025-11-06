@@ -56,7 +56,7 @@ public class WaveSpawner : MonoBehaviour
         StatsManager.Instance.RecordCompletion();
         StatsManager.Instance.RecordFull(_ui.GetCurrentWaveName());
         yield return new WaitForSeconds(3f);
-        GameManager.Instance.ReturnToMenu();
+        GameManager.ReturnToMenu();
     }
     private void SpawnAttack(WaveEntry entry) // attack spawning
     {
