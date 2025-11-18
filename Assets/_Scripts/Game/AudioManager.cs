@@ -7,25 +7,33 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [SerializeField] private AudioSource musicSource;
-    [SerializeField] private Image bufferPanel;
-    [Header("Music")] 
+    
+    [Header("Music")]  // many sound clips
     [SerializeField] private int sfxPoolSize = 8;
     public AudioClip menuMusic;
     public AudioClip levelMusic;
+    
     [Header("Player")]
     public AudioClip parrySFX;
+    public AudioClip hitSFX;
     public AudioClip deathSFX;
+    
     [Header("Enemies")]
+    public AudioClip bulletSFX;
+    public AudioClip laserSFX;
+    public AudioClip areaSFX;
+    public AudioClip missileLoopSFX;
     public AudioClip explosionSFX;
     
     [Header("UI")]
     public AudioClip menuPressSFX;
     public AudioClip menuHoverSFX;
-    
-    [Header("Volume Settings")]
+
+    [Header("Volume Settings")] 
+    [Range(0f, 1f)] public float masterVolume = 1f;
     [Range(0f, 1f)] public float musicVolume;
     [Range(0f, 1f)] public float sfxVolume;
-    private float sliderExp = 1.5f;
+    private const float sliderExp = 1.5f;
     private AudioSource[] sfxSources;
     private void Awake()
     {
@@ -37,7 +45,7 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         
-        sfxSources = new AudioSource[sfxPoolSize];
+        sfxSources = new AudioSource[sfxPoolSize]; // make pool for audio sources to make sound stacking possible, similar to AttackPoolManager
         for (int i = 0; i < sfxPoolSize; i++)
         {
             GameObject go = new GameObject("SFX_" + i);
@@ -47,82 +55,89 @@ public class AudioManager : MonoBehaviour
             sfxSources[i] = src;
         }
     }
+    
+    private float MapSliderToVolume(float sliderValue)
+    {
+        return Mathf.Pow(sliderValue, sliderExp); // use exponential to change slider-volume ratio
+    }
+    
+    private void ApplyVolume()
+    {
+        float mappedMusic = MapSliderToVolume(musicVolume) * masterVolume;
+        musicSource.volume = mappedMusic;
+
+        float mappedSFX = MapSliderToVolume(sfxVolume) * masterVolume;
+        foreach (var src in sfxSources)
+            src.volume = mappedSFX;
+    }
+    
     private void Start()
     {
         musicSource.volume = 0f;
-        musicVolume = PlayerPrefs.GetFloat("MusicVolume", .2f);
-        sfxVolume = PlayerPrefs.GetFloat("SFXVolume", .2f);
-        foreach (var src in sfxSources) src.volume = MapSliderToVolume(sfxVolume);
-        if(bufferPanel != null) bufferPanel.gameObject.SetActive(true);
-        StartCoroutine(StartWithBuffer());
+        masterVolume = PlayerPrefs.GetFloat("MasterVolume", .5f);
+        musicVolume = PlayerPrefs.GetFloat("MusicVolume", .5f); // set volume preferences from local data
+        sfxVolume = PlayerPrefs.GetFloat("SFXVolume", .5f);
+        ApplyVolume();
+        foreach (var src in sfxSources) src.volume = MapSliderToVolume(sfxVolume); // adjust volume-slider ratio
+        StartCoroutine(FadeInMusicWithPanel(menuMusic, 2f, true)); // start loading buffer
     }
-    
-    private IEnumerator StartWithBuffer()
+    private IEnumerator FadeInMusicWithPanel(AudioClip clip, float fadeDuration, bool loop)
     {
-        float bufferDuration = 1f;
-        float fadeDuration = 3f;
-        yield return null;
-        yield return StartCoroutine(FadeInMusicWithPanel(menuMusic, fadeDuration, true, bufferDuration));
-    }
-    
-    private IEnumerator FadeInMusicWithPanel(AudioClip clip, float fadeDuration, bool loop, float initialDelay)
-    {
+        yield return new WaitForSeconds(2f);
         if (clip == null) yield break;
-        if (initialDelay > 0f) yield return new WaitForSeconds(initialDelay);
-        float targetVolume = MapSliderToVolume(musicVolume);
+        float targetVolume = MapSliderToVolume(musicVolume) * masterVolume;
         musicSource.clip = clip;
         musicSource.loop = loop;
         musicSource.volume = 0f;
         musicSource.Play();
-
+        
         float t = 0f;
-        Color panelColor = bufferPanel != null ? bufferPanel.color : Color.black;
+        StartCoroutine(TransitionHandler.Instance.FadeIn(2f));
         while (t < fadeDuration)
         {
             t += Time.deltaTime;
             float progress = t / fadeDuration;
             musicSource.volume = Mathf.Lerp(0f, targetVolume, progress);
-            Color c = panelColor;
-            c.a = Mathf.Lerp(1f, 0f, progress);
-            bufferPanel.color = c;
+
             yield return null;
         }
         musicSource.volume = targetVolume;
-        bufferPanel.gameObject.SetActive(false);
     }
-    
-    private float MapSliderToVolume(float sliderValue)
+
+    public void SetMasterVolume(float value)
     {
-        return Mathf.Pow(sliderValue, sliderExp);
+        masterVolume = value;
+        ApplyVolume();
+        PlayerPrefs.SetFloat("MasterVolume", value);
+        PlayerPrefs.Save();
     }
-    public void SetMusicVolume(float value)
+    public void SetMusicVolume(float value) // volume setters for music/sfx
     {
-        musicSource.volume = MapSliderToVolume(value);
+        musicVolume = value;
+        ApplyVolume();
         PlayerPrefs.SetFloat("MusicVolume", value);
         PlayerPrefs.Save();
     }
 
     public void SetSFXVolume(float value)
     {
-        foreach (var src in sfxSources) src.volume = MapSliderToVolume(value);
+        sfxVolume = value;
+        ApplyVolume();
         PlayerPrefs.SetFloat("SFXVolume", value);
         PlayerPrefs.Save();
     }
-
-
-    
-    public bool IsPlayingClip(AudioClip clip)
+    public bool IsPlayingClip(AudioClip clip) // helper function
     {
         return musicSource.clip == clip && musicSource.isPlaying;
     }
 
-    public IEnumerator FadeInMusic(AudioClip clip, float duration, bool loop)
+    public IEnumerator FadeInMusic(AudioClip clip, float duration, bool loop) // fade music by lerping volume
     {
         if (clip == null) yield break;
-        float targetVolume = MapSliderToVolume(musicVolume);
+        float targetVolume = MapSliderToVolume(musicVolume) * masterVolume;
         if (MapSliderToVolume(musicVolume) == 0)
         {
-            targetVolume = MapSliderToVolume(PlayerPrefs.GetFloat("MusicVolume", .2f));
+            targetVolume = MapSliderToVolume(PlayerPrefs.GetFloat("MusicVolume", .2f)) * masterVolume;
         }
         musicSource.clip = clip;
         musicSource.volume = 0f;
@@ -139,7 +154,7 @@ public class AudioManager : MonoBehaviour
         musicSource.volume = targetVolume;
     }
 
-    public IEnumerator FadeOutMusic(float duration)
+    public IEnumerator FadeOutMusic(float duration) // reverse above function
     {
         float startVolume = musicSource.volume;
 
@@ -155,23 +170,19 @@ public class AudioManager : MonoBehaviour
         musicSource.volume = startVolume;
     }
 
-    public IEnumerator CrossfadeMusic(AudioClip newClip, float fadeDuration = 2f, bool loop = true)
+    public IEnumerator CrossfadeMusic(AudioClip newClip, float fadeDuration = 2f, bool loop = true) // trigger both above functions concurrently to crossfade
     {
         if (musicSource.isPlaying)
             yield return StartCoroutine(FadeOutMusic(fadeDuration));
 
         yield return StartCoroutine(FadeInMusic(newClip, fadeDuration, loop));
     }
-    
-    public static void PlaySFX(
-        AudioClip clip, float pitchMin = 0.95f, float pitchMax = 1.05f, 
-        float volumeMin = 0.85f, float volumeMax = 1.0f)
+    public static AudioSource PlaySFX(AudioClip clip, bool looping = false, 
+        float pitchMin = 0.95f, float pitchMax = 1.05f, float volumeMin = 0.85f, float volumeMax = 1.0f) // global soundclip player with randomizing pitch/volume
     {
-        if (clip == null) return;
-
-        // Find an available AudioSource
+        if (clip == null) return null;
         AudioSource src = null;
-        for (int i = 0; i < Instance.sfxSources.Length; i++)
+        for (int i = 0; i < Instance.sfxSources.Length; i++) // find an open audiosource to play sfx from
         {
             if (!Instance.sfxSources[i].isPlaying)
             {
@@ -179,14 +190,21 @@ public class AudioManager : MonoBehaviour
                 break;
             }
         }
-
-        if (src == null)
-            src = Instance.sfxSources[0]; // recycle first if all busy
-
-        // Randomize pitch and volume
-        src.pitch = Random.Range(pitchMin, pitchMax);
-        float baseVolume = Instance.MapSliderToVolume(Instance.sfxVolume);
+        if (src == null) src = Instance.sfxSources[0]; // fallback
+        float baseVolume = Instance.MapSliderToVolume(Instance.sfxVolume) * Instance.masterVolume;
         src.volume = baseVolume * Random.Range(volumeMin, volumeMax);
-        src.PlayOneShot(clip);
+        src.pitch = Random.Range(pitchMin, pitchMax);
+        src.loop = looping;
+        src.clip = clip;
+        src.Play();
+        return src;
     }
+    public static void StopSFX(AudioSource source) // global sfx stopper (for looping sounds)
+    {
+        if (source == null) return;
+        source.Stop();
+        source.clip = null;
+        source.loop = false;
+    }
+    
 }

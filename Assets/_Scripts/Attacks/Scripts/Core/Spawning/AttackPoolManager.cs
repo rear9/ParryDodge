@@ -8,12 +8,13 @@ public class AttackPoolManager : MonoBehaviour
     [System.Serializable]
     public class Pool
     {
-        public string key;
-        public GameObject prefab;
-        public int initialSize = 5;
+        public string key; // assigns id to each attack in a pool
+        public GameObject prefab; // prefab to instantiate
+        public int initialSize = 5; // size of the pool
     }
 
-    [SerializeField] private List<Pool> pools = new();
+    [SerializeField] private List<Pool> pools = new(); // list + dictionary creation
+    private readonly List<GameObject> activeAttacksList = new();
     private readonly Dictionary<string, Queue<GameObject>> _poolDict = new();
     private readonly Dictionary<string, Transform> _poolParentDict = new();
 
@@ -23,14 +24,14 @@ public class AttackPoolManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         
-        foreach (var pool in pools)
+        foreach (var pool in pools) // for each type of attack, create a parent folder
         {
             var objectPool = new Queue<GameObject>();
             GameObject folder = new GameObject(pool.key + "_Pool");
             folder.transform.SetParent(transform);
             _poolParentDict[pool.key] = folder.transform;
             
-            for (int i = 0; i < pool.initialSize; i++)
+            for (int i = 0; i < pool.initialSize; i++) // for each parent folder, instantiate attack prefabs equal to the size of the pool
             {
                 var obj = Instantiate(pool.prefab, Vector3.zero, Quaternion.identity, folder.transform);
                 obj.SetActive(false);
@@ -48,7 +49,7 @@ public class AttackPoolManager : MonoBehaviour
             return null;
         }
         
-        var spawnObj = _poolDict[key].Dequeue();
+        var spawnObj = _poolDict[key].Dequeue(); // pull attack prefab out of the pool folder into play area and activate it
         spawnObj.transform.SetParent(null);
         if (spawnObj.TryGetComponent(out Rigidbody2D rb))
         {
@@ -59,9 +60,9 @@ public class AttackPoolManager : MonoBehaviour
         }
         spawnObj.transform.SetPositionAndRotation(pos,rot);
         spawnObj.SetActive(true);
+        activeAttacksList.Add(spawnObj);
         return spawnObj;
     }
-
     public void ReturnToPool(string key, GameObject obj)
     {
         if (!_poolDict.TryGetValue(key, out var val))
@@ -69,8 +70,33 @@ public class AttackPoolManager : MonoBehaviour
             Destroy(obj); // fallback
         }
 
-        obj.SetActive(false);
+        obj.SetActive(false); // reverse the above function
+        activeAttacksList.Remove(obj);
         obj.transform.SetParent(_poolParentDict[key]);
         val.Enqueue(obj);
     }
+    
+    public void ReturnAllToPool() // return all active objects to pool using the activeAttacksList (necessary to clean-up on player death)
+    {
+        var copy = new List<GameObject>(activeAttacksList);
+        foreach (var obj in copy)
+        {
+            if (obj.TryGetComponent(out EnemyAttackCore atk))
+            {
+                if (!string.IsNullOrEmpty(atk.GetPoolKey()))
+                    ReturnToPool(atk.GetPoolKey(), obj);
+            }
+            else
+            {
+                obj.SetActive(false);
+            }
+        }
+        activeAttacksList.Clear();
+    }
+    public List<GameObject> GetActiveAttacks() // helper to get active attacks, used for custom attack logic
+    {
+        return new List<GameObject>(activeAttacksList);
+    }
+
+    
 }

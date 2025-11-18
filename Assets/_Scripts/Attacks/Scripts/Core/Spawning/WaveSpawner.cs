@@ -34,13 +34,13 @@ public class WaveSpawner : MonoBehaviour
     
     private IEnumerator WaveRoutine() // main loop
     {
+        StatsManager.Instance.SetGameState("Play");
         yield return new WaitForSeconds(waveStartDelay);
         UIManager _ui = FindFirstObjectByType<UIManager>();
-        foreach (var wave in waves)
+        foreach (var wave in waves) // for each wave, update UI
         {
-            Debug.Log($"Wave: {wave.waveName}");
             _ui.UpdateWaveName(wave.waveName);
-            foreach (var entry in wave.waveAttacks)
+            foreach (var entry in wave.waveAttacks) // spawn each attack in the wave with delay between each attack
             {
                 for (int i = 0; i < entry.attackCount; i++)
                 {
@@ -48,32 +48,26 @@ public class WaveSpawner : MonoBehaviour
                     yield return new WaitForSeconds(entry.attackDelay);
                 }
             }
-
-            yield return new WaitForSeconds(wave.waveDelay);
+            yield return new WaitForSeconds(wave.waveDelay); // delay between waves
         }
-        // waves done
-        _ui.UpdateWaveName("COMPLETE");
-        StatsManager.Instance.RecordCompletion();
-        StatsManager.Instance.RecordFull(_ui.GetCurrentWaveName());
-        yield return new WaitForSeconds(3f);
-        GameManager.ReturnToMenu();
+        StartCoroutine(WavesComplete());
     }
-    private void SpawnAttack(WaveEntry entry) // attack spawning
+    private void SpawnAttack(WaveEntry entry) // attack spawning by using AttackPoolManager
     {
         if (waves.Count == 0 || spawnPoints.Length == 0) return;
 
-        Transform spawn = entry.spawnPoint != null ? entry.spawnPoint : GetRandomSpawnPoint();
-        GameObject attackObj = AttackPoolManager.Instance.SpawnFromPool(entry.attackName, spawn.position, Quaternion.identity);
+        Transform spawn = entry.spawnPoint != null ? entry.spawnPoint : GetRandomSpawnPoint(); // take transform of a random index out of spawn points array if not defined
+        GameObject attackObj = AttackPoolManager.Instance.SpawnFromPool(entry.attackName, spawn.position, Quaternion.identity); // pull attack out of pool
         if (!attackObj) return;
         
         if (attackObj.TryGetComponent(out EnemyAttackCore core))
         {
-            core.SetPoolKey(entry.attackName);
+            core.SetPoolKey(entry.attackName); // sets an id for the attack and returns it to pool after its' lifetime
         }
         
         if (attackObj.TryGetComponent(out IEnemyAttack attack))
         {
-            attack.InitAttack(GameObject.FindGameObjectWithTag("Player")?.transform);
+            attack.InitAttack(GameObject.FindGameObjectWithTag("Player")?.transform); // initializes attack's startup
         }
     }
     
@@ -83,16 +77,26 @@ public class WaveSpawner : MonoBehaviour
         {
             return transform; // fallback
         }
-
         if (spawnPoints.Length == 1) return spawnPoints[0];
     
         Transform spawn;
         do
         {
             spawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        } while (spawn == _lastSpawn);
-    
+        }
+        while (spawn == _lastSpawn); // stops repeat spawn points from generating
         _lastSpawn = spawn;
         return spawn;
+    }
+    private IEnumerator WavesComplete()
+    {
+        UIManager _ui = FindFirstObjectByType<UIManager>();
+        _ui.UpdateWaveName("COMPLETE"); // if all waves complete
+        StatsManager.Instance.SetGameState("Completion");
+        StatsManager.Instance.RecordCompletion();
+        StatsManager.Instance.RecordFull(_ui.GetCurrentWaveName()); // stat-tracking
+        StartCoroutine(AudioManager.Instance.CrossfadeMusic(AudioManager.Instance.menuMusic,1f));
+        yield return StartCoroutine(TransitionHandler.Instance.FadeOut(2f));
+        GameManager.ReturnToMenu();
     }
 }

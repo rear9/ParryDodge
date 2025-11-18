@@ -57,20 +57,23 @@ public class InputHandler : MonoBehaviour
         }; 
     }
 
-    public void SetTutorialMode(bool enable, int stage)
+    public void SetTutorialMode(bool enabled, int stage)
     {
-        _allowMovement = !enable;
-        _allowParry = !enable;
-        _allowDodge = !enable;
         if (stage == 1)
         {
-            _allowDodge = !enable;
-            _allowParry = enable;
+            _allowDodge = !enabled;
+            _allowParry = enabled;
         }
         else if (stage == 2)
         {
-            _allowParry = !enable;
-            _allowDodge = enable;
+            _allowParry = !enabled;
+            _allowDodge = enabled;
+        }
+        else
+        {
+            _allowMovement = !enabled;
+            _allowParry = !enabled;
+            _allowDodge = !enabled;
         }
     }
     

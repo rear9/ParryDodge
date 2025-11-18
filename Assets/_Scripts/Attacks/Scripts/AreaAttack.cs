@@ -9,11 +9,11 @@ public class AreaAttack : EnemyAttackCore, IEnemyAttack
 
     [Header("Timings")]
     [SerializeField] private float fadeInDuration = 2f;
-    [SerializeField] private float activeDuration = 1f;
     [SerializeField] private float fadeOutDuration = 1f;
 
     private Color _baseColor;
     private Collider2D _collider;
+    
 
     protected override void Awake()
     {
@@ -23,7 +23,7 @@ public class AreaAttack : EnemyAttackCore, IEnemyAttack
         if (_collider) _collider.enabled = false;
     }
 
-    public void InitAttack(Transform player)
+    public void InitAttack(Transform player) // Reset and start attack sequence
     {
         _active = false;
         
@@ -36,8 +36,8 @@ public class AreaAttack : EnemyAttackCore, IEnemyAttack
 
     private IEnumerator AttackSequence()
     {
-        // fade in + telegraph
-        float timer = 0f;
+        AudioManager.PlaySFX(AudioManager.Instance.areaSFX); // Start laser sfx
+        float timer = 0f; // fade in + telegraph with lerp
         while (timer < fadeInDuration)
         {
             float t = Mathf.PingPong(timer * 2f, 1f);
@@ -45,13 +45,11 @@ public class AreaAttack : EnemyAttackCore, IEnemyAttack
             timer += Time.deltaTime;
             yield return null;
         }
-
         sr.color = _baseColor;
-
-        // enable/disable collisions
+        // enable and disable after duration ends
         if (_collider) _collider.enabled = true;
         _active = true;
-        yield return new WaitForSeconds(activeDuration);
+        yield return new WaitForSeconds(stats.lifetime); // adjust in editor
         _active = false;
         if (_collider) _collider.enabled = false;
 

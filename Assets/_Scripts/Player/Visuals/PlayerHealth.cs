@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI; // for Image reference (hit screen)
 
@@ -9,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     private float _currentHP;
 
     [Header("References")] 
+    [SerializeField] private SpriteRenderer playerSprite;
     [SerializeField] private Sprite deathSprite;
     [SerializeField] private Image hitScreen; // assign red overlay image
     [SerializeField] private float hitScreenDuration = 0.5f;
@@ -26,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         _currentHP -= dmg;
+        AudioManager.PlaySFX(AudioManager.Instance.hitSFX);
         _currentHP = Mathf.Clamp(_currentHP, 0, maxHP);
         if (_ui != null) _ui.UpdateHP(_currentHP, maxHP);
         StartCoroutine(HitFlash());
@@ -34,55 +37,69 @@ public class PlayerHealth : MonoBehaviour
 
     private IEnumerator HitFlash()
     {
-        if (hitScreen == null) yield break;
+        if (hitScreen == null || playerSprite == null)
+            yield break;
 
-        Color c = hitScreen.color;
-        c.a = 0f;
+        // Save original color
+        Color screenColor = hitScreen.color;
+        Color playerColor = playerSprite.color;
+
         hitScreen.enabled = true;
 
-        float half = hitScreenDuration * 0.5f;
-        float t = 0f;
+        float halfDuration = hitScreenDuration * 0.5f;
+        float elapsed = 0f;
 
-        // fade in
-        while (t < half)
+        while (elapsed < hitScreenDuration)
         {
-            t += Time.deltaTime;
-            c.a = Mathf.Lerp(0f, .5f, t / half);
-            hitScreen.color = c;
-            yield return null;
-        }
+            elapsed += Time.deltaTime;
 
-        t = 0f;
-        // fade out
-        while (t < half)
-        {
-            t += Time.deltaTime;
-            c.a = Mathf.Lerp(.5f, 0f, t / half);
-            hitScreen.color = c;
+            // Screen overlay: fade in/out
+            if (elapsed < halfDuration)
+            {
+                screenColor.a = Mathf.Lerp(0f, 0.5f, elapsed / halfDuration);
+            }
+            else
+            {
+                screenColor.a = Mathf.Lerp(0.5f, 0f, (elapsed - halfDuration) / halfDuration);
+            }
+            hitScreen.color = screenColor;
+
+            // Player flash: flash white briefly at the start
+            if (elapsed < 0.05f) // quick white flash
+            {
+                playerSprite.color = Color.white;
+            }
+            else
+            {
+                playerSprite.color = playerColor; // revert
+            }
+
             yield return null;
         }
 
         hitScreen.enabled = false;
+        playerSprite.color = playerColor; // ensure original color restored
     }
-
-
+    
     private IEnumerator Die() // record death in stats and send player back to main menu for now
     {
+        AttackPoolManager.Instance?.ReturnAllToPool();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponents<CircleCollider2D>()[1].enabled = false;
         player.GetComponents<CircleCollider2D>()[0].enabled = false;
-        Time.timeScale = 0;
+        Time.timeScale = 0.1f;
         StartCoroutine(AudioManager.Instance.FadeOutMusic(0));
         AudioManager.PlaySFX(AudioManager.Instance.deathSFX);
         yield return new WaitForSecondsRealtime(1.5f);
         if (player != null)
         {
-            player.GetComponent<SpriteRenderer>().sprite = deathSprite;
+            playerSprite.sprite = deathSprite;
         }
         yield return new WaitForSecondsRealtime(1f);
         if (StatsManager.Instance != null && _ui != null)
         {
             string currentWave = _ui != null ? _ui.GetCurrentWaveName() : "N/A";
+            StatsManager.Instance.SetGameState("Death");
             StatsManager.Instance.RecordDeath(currentWave);
         }
         

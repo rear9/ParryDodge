@@ -54,14 +54,13 @@ public class FastBullet : EnemyAttackCore, IEnemyAttack // inherit from core and
 
     private void SetTraceScale(float length)
     {
-        // Scale only in Y direction
+        // scale in Y
         traceTransform.localScale = new Vector2(_originScale.x, length);
         
-        // Offset position so it grows forward only
-        // Assumes tracer points up (positive Y)
+        // offset pos so it grows forward, assumes tracer points up (positive Y)
         traceTransform.localPosition = new Vector3(
             _originPos.x,
-            _originPos.y + (length * 0.5f) // Move up by half the scale
+            _originPos.y + (length * 0.5f) // move vertically by half the scale
         );
     }
     
@@ -76,7 +75,7 @@ public class FastBullet : EnemyAttackCore, IEnemyAttack // inherit from core and
             {
                 float progress = timer / chargeTime;
                 
-                // Scale the tracer length over time
+                // scale the tracer length over time
                 float currentLength = Mathf.Lerp(0.1f, maxTraceLength, progress);
                 SetTraceScale(currentLength);
                 
@@ -89,6 +88,7 @@ public class FastBullet : EnemyAttackCore, IEnemyAttack // inherit from core and
         }
         SetTraceScale(maxTraceLength);
         sr.color = _baseColor;
+        AudioManager.PlaySFX(AudioManager.Instance.bulletSFX); // play sfx / start bullet movement
         _active = true;
         _speed = stats ? stats.attackSpeed : 5f;
         _moving = true;
@@ -105,8 +105,9 @@ public class FastBullet : EnemyAttackCore, IEnemyAttack // inherit from core and
     protected override void OnParried(Transform parrySource)
     {
         if (!_active) return;
+        GameManager.Instance.TriggerHitstop(0.05f);
         gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
-        if (parrySource.TryGetComponent(out Collider2D parryCollider))
+        if (parrySource.TryGetComponent(out Collider2D parryCollider)) // on parry, reflect in random direction (360 degrees) (might restructure to reflect towards active attacks)
         {
             var reflectDir = ((Vector2)transform.position - parryCollider.ClosestPoint(transform.position)).normalized;
             if (reflectDir.sqrMagnitude < 0.01f)

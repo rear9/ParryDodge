@@ -13,7 +13,7 @@ public abstract class EnemyAttackCore : MonoBehaviour
     
     protected virtual void Awake() => _rb = GetComponent<Rigidbody2D>();
     protected virtual void OnEnable() => _active = true;
-    protected virtual void OnDisable() // reset when disabled
+    protected virtual void OnDisable() // full reset when returns to pool
     {
         _active = false;
         CancelInvoke();
@@ -27,7 +27,7 @@ public abstract class EnemyAttackCore : MonoBehaviour
         int layer = other.gameObject.layer;
         if (layer == LayerMask.NameToLayer("PlayerParry") && stats.parryable) // if parrying an attack that can be parried
         {
-            // parry the attack if parryable, refresh player parry cooldown
+            // stop duplicate triggers, refresh player parry cooldown
             if (_playerHit) return;
             _playerHit = true;
             OnParried(other.transform);
@@ -39,12 +39,12 @@ public abstract class EnemyAttackCore : MonoBehaviour
             _playerHit = true;
             if (other.TryGetComponent(out PlayerHealth health))
             {
-                health.TakeDamage((stats.damage > 0 ? stats.damage : 1));
+                health.TakeDamage((stats.damage > 0 ? stats.damage : 1)); // if hit, take damage equal to the attack's damage stat
             }
         }
         else if (layer == LayerMask.NameToLayer("PlayerParry") && !stats.parryable)
         {
-            // parrying unparriable attack
+            // parrying unparriable attack will make the player take damage
             if (_playerHit) return;
             _playerHit = true;
             if (other.TryGetComponent(out PlayerHealth health))
@@ -53,16 +53,17 @@ public abstract class EnemyAttackCore : MonoBehaviour
             }
         }
         else if (layer == LayerMask.NameToLayer("PlayerDodge"))
-
         {
             if (_playerHit) return;
             _playerHit = true;
+            // to record successful dodges for stats
             StatsManager.Instance.RecordDodge();
         }
     }
 
-    protected virtual void OnParried(Transform parrySource) // default = disappear into pool when parried
+    protected virtual void OnParried(Transform parrySource) // default = short hit-stop, disappear into pool when parried
     {
+        GameManager.Instance.TriggerHitstop(0.05f);
         ReturnToPool();
     }
     protected void ReturnToPool() // return attack to pool & reset params
@@ -83,12 +84,14 @@ public abstract class EnemyAttackCore : MonoBehaviour
             AttackPoolManager.Instance.ReturnToPool(_poolKey,gameObject);
         }
     }
+
+    public string GetPoolKey() => _poolKey;
     public void SetPoolKey(string key) // set key to return after attack's lifetime
     {
         _poolKey = key;
         if (stats?.lifetime > 0)
         {
-            Invoke(nameof(ReturnToPool), stats.lifetime);
+            Invoke(nameof(ReturnToPool), stats.lifetime); // call returntopool function after the attack's defined lifetime
         }
     }
 }

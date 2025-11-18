@@ -6,14 +6,14 @@ using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
+    [SerializeField] private UIButtonSFX UIButtonSFX;
     [SerializeField] private Button playButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private EventSystem eventSystem;
     [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider sfxSlider;
-
-
-    private bool isUsingController = false;
+    private bool isUsingController;
 
     private void Start()
     {
@@ -24,10 +24,18 @@ public class MenuManager : MonoBehaviour
         
         if (AudioManager.Instance != null)
         {
+            masterSlider.onValueChanged.AddListener(AudioManager.Instance.SetMasterVolume);
             musicSlider.onValueChanged.AddListener(AudioManager.Instance.SetMusicVolume);
             sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSFXVolume);
+            masterSlider.value = PlayerPrefs.GetFloat("MasterVolume", .5f);
             musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", .5f);
             sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", .5f);
+        }
+        foreach (var button in FindObjectsByType<Button>(FindObjectsSortMode.None))
+        {
+            var sfx = button.gameObject.AddComponent<UIButtonSFX>();
+            sfx.hoverSFX = AudioManager.Instance.menuHoverSFX;
+            sfx.clickSFX = AudioManager.Instance.menuPressSFX;
         }
     } 
     void Update()
@@ -53,6 +61,7 @@ public class MenuManager : MonoBehaviour
                 if (eventSystem.currentSelectedGameObject == null)
                 {
                     eventSystem.SetSelectedGameObject(quitButton.gameObject);
+                    Cursor.visible = false;
                 }
             }
         }
@@ -64,6 +73,7 @@ public class MenuManager : MonoBehaviour
             {
                 isUsingController = false;
                 eventSystem.SetSelectedGameObject(null);
+                Cursor.visible = true;
             }
         }
     }

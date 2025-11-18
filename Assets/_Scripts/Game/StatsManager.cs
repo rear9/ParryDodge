@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System;
 
 [System.Serializable]
-public class PlayerStats
+public class PlayerStats // variable stats class object
 {
     public string gameState = "Play";
     public int totalDeaths;
@@ -37,13 +37,13 @@ public class StatsManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Load or create persistent stats
+        // create persistent and viewable stats using json
         if (PlayerPrefs.HasKey(StatsKey))
             _stats = JsonUtility.FromJson<PlayerStats>(PlayerPrefs.GetString(StatsKey));
         else
             _stats = new PlayerStats();
 
-        // Load or create persistent player ID
+        // create persistent player ID
         if (!PlayerPrefs.HasKey(PlayerIdKey))
             PlayerPrefs.SetString(PlayerIdKey, Guid.NewGuid().ToString());
         _playerID = PlayerPrefs.GetString(PlayerIdKey);
@@ -52,7 +52,7 @@ public class StatsManager : MonoBehaviour
         AnalyticsManager.Initialise("v0.5");
     }
 
-    private void OnApplicationPause(bool pause)
+    private void OnApplicationPause(bool pause) // attempt to save stats on pause (doesn't work on altf4 currently)
     {
         if (pause && _ui != null)
         {
@@ -64,8 +64,7 @@ public class StatsManager : MonoBehaviour
 
     // --- tutorial ---
     public bool ShouldPlayTutorial() => !PlayerPrefs.HasKey(TutorialKey) || replayTutorial;
-
-    public void CompleteTutorial()
+    public void CompleteTutorial() // later integration
     {
         PlayerPrefs.SetInt(TutorialKey, 1);
         PlayerPrefs.Save();
@@ -75,26 +74,22 @@ public class StatsManager : MonoBehaviour
     // --- general stats ---
     public void RecordFull(string waveName)
     {
-        var parameters = new Dictionary<string, object>
+        var parameters = new Dictionary<string, object> // params for sending as event or to logs
         {
-            { "player_id", _playerID },
-            { "time", Time.time },
-            { "game_state", _stats.gameState},
-            { "wave_name", waveName },
+            { "player_id", _playerID }, // identifier
+            { "time", Time.time }, // current time
+            { "game_state", _stats.gameState}, // state (paused/dead/quit)
+            { "wave_name", waveName }, // last wave detected
             { "total_deaths", _stats.totalDeaths },
             { "total_parries", _stats.totalParries },
             { "total_dodges", _stats.totalDodges },
             { "total_completions", _stats.totalCompletions }
         };
-
-        foreach (var key in parameters.Keys)
-            print($"Key: {key} -  Value: {parameters[key]}");
-
         AnalyticsManager.SendCustomEvent("Stats", parameters);
         StartCoroutine(GlobalStatLogger.SendToGoogleSheet(parameters));
     }
 
-    private void SaveStats()
+    private void SaveStats() // save back to json
     {
         string json = JsonUtility.ToJson(_stats);
         PlayerPrefs.SetString(StatsKey, json);
@@ -118,7 +113,6 @@ public class StatsManager : MonoBehaviour
     {
         _stats.totalCompletions++;
         SaveStats();
-        RecordFull(_ui != null ? _ui.GetCurrentWaveName() : "Unknown");
     }
 
     public void RecordDeath(string waveName)
@@ -130,5 +124,7 @@ public class StatsManager : MonoBehaviour
         RecordFull(waveName);
     }
 
-    public PlayerStats GetStats() => _stats;
+    public PlayerStats GetStats() => _stats; // get stats helper (can be useful for custom events)
+    public void SetGameState(string state) => _stats.gameState = state;
+
 }

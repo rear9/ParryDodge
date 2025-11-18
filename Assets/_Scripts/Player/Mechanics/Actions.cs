@@ -7,6 +7,7 @@ public class Actions : MonoBehaviour
 {
     [SerializeField] private Movement movement;
     [SerializeField] private PlayerColor plrColor;
+    [SerializeField] private CooldownUI cooldownUI;
     public ShakeData parryShakeData;
     
     [Header("Parry Settings")]
@@ -33,7 +34,6 @@ public class Actions : MonoBehaviour
     public void StartParry()
     {
         if (_parrying || _parryCdActive) return;
-        gameObject.layer = LayerMask.NameToLayer("PlayerParry");
         StartCoroutine(ParryRoutine());
     }
     private IEnumerator ParryRoutine() // parry mechanic
@@ -57,13 +57,14 @@ public class Actions : MonoBehaviour
         if (!_parryHit)
         {
             _parryCdActive = true;
+            cooldownUI?.StartParryCooldown(parryFailCd);
             yield return new WaitForSeconds(parryFailCd); // Counter parry spam
             _parryCdActive = false;
         }
     }
     public void ParrySuccess()
     {
-        StatsManager.Instance.RecordParry();
+        StatsManager.Instance.RecordParry(); 
         AudioManager.PlaySFX(AudioManager.Instance.parrySFX);
         CameraShakerHandler.Shake(parryShakeData);
         _parryHit = true;
@@ -93,11 +94,16 @@ public class Actions : MonoBehaviour
         movement.speed = _dodgeSpeed;
         gameObject.layer = LayerMask.NameToLayer("Player");
         _dodgeCdActive = true; // start dodge cd
+        cooldownUI?.StartDodgeCooldown(dodgeCd);
         yield return new WaitForSeconds(dodgeCd);
         _dodgeCdActive = false;
     }
     public void CancelDodge()
     {
-        if (_dodging) _dodging = false; movement.speed = _dodgeSpeed;
+        if (_dodging)
+        {
+            _dodging = false;
+            movement.speed = _dodgeSpeed;
+        }
     }
 }

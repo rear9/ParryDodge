@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class GlobalStatLogger : MonoBehaviour
+public class GlobalStatLogger : MonoBehaviour // inspired from -- notioncheck --
 {
     private const string SheetURL =
         "https://script.google.com/macros/s/AKfycbxNQ6sRaXTuyKVlJGU0O6-H8JdXrGZ4tszEBzSas04DNF1Asp7dALy-_OJ_DzQa98bKxw/exec";
