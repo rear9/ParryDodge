@@ -1,0 +1,342 @@
+[
+  {
+    "eventTimestamp": "2/11/2025 00:00:31",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "998ad0650441c5f4c729ea7cfbf5c6f7",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 129.481247,
+      "game_state": "Death",
+      "wave_name": "Unknown",
+      "total_deaths": 6,
+      "total_parries": 97,
+      "total_dodges": 58,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "2/11/2025 00:04:18",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "c758ca6b2cf0a77f0c7b9c28312f13e3",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 70.25387,
+      "game_state": "Death",
+      "wave_name": "MEDIUM",
+      "total_deaths": 7,
+      "total_parries": 114,
+      "total_dodges": 61,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "6/11/2025 08:27:38",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "be3734ac55f80666c49a759d3035708e",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 71.98289,
+      "game_state": "Death",
+      "wave_name": "MEDIUM",
+      "total_deaths": 8,
+      "total_parries": 145,
+      "total_dodges": 72,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "6/11/2025 08:36:46",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "29fef818316e98c009356b8e2681027a",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 37.4641876,
+      "game_state": "Death",
+      "wave_name": "EASY",
+      "total_deaths": 9,
+      "total_parries": 146,
+      "total_dodges": 73,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "6/11/2025 08:39:20",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "bde5f034156e83dde5fecb4d3f5e4027",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 37.15898,
+      "game_state": "Death",
+      "wave_name": "EASY",
+      "total_deaths": 10,
+      "total_parries": 148,
+      "total_dodges": 74,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "6/11/2025 08:42:25",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "c40b1e37fc068838f61a9da90271c5b0",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 25.7970467,
+      "game_state": "Death",
+      "wave_name": "TUTORIAL",
+      "total_deaths": 11,
+      "total_parries": 149,
+      "total_dodges": 74,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "6/11/2025 08:43:35",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "56695483ec92d8383a4ebd97ee6210a9",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 64.36706,
+      "game_state": "Death",
+      "wave_name": "EASY",
+      "total_deaths": 12,
+      "total_parries": 150,
+      "total_dodges": 75,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "6/11/2025 08:46:56",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "2bf6297745e5a99bb27c4683bd13e10b",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 43.65019,
+      "game_state": "Death",
+      "wave_name": "EASY",
+      "total_deaths": 13,
+      "total_parries": 151,
+      "total_dodges": 77,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "6/11/2025 08:48:49",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "e809089203124c7e4be22f76712b259b",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 26.3073368,
+      "game_state": "Death",
+      "wave_name": "TUTORIAL",
+      "total_deaths": 14,
+      "total_parries": 152,
+      "total_dodges": 77,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "9/11/2025 14:32:30",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "253f0decadecb17dde266c52484c48a7",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 98.73417,
+      "game_state": "Death",
+      "wave_name": "HARD",
+      "total_deaths": 15,
+      "total_parries": 180,
+      "total_dodges": 86,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "9/11/2025 15:53:17",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "da5625f1e5538cbe8a8aa2b700f7e93f",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 111.717293,
+      "game_state": "Death",
+      "wave_name": "HARD",
+      "total_deaths": 16,
+      "total_parries": 209,
+      "total_dodges": 107,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "9/11/2025 16:13:55",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "04514df148a1e296bc3b361b2a02ae64",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 30.50049,
+      "game_state": "Death",
+      "wave_name": "TUTORIAL",
+      "total_deaths": 17,
+      "total_parries": 210,
+      "total_dodges": 108,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "9/11/2025 16:18:39",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "5dc7d5c8955cf5504a5ef1941dcc3e72",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 27.9353466,
+      "game_state": "Death",
+      "wave_name": "TUTORIAL",
+      "total_deaths": 18,
+      "total_parries": 211,
+      "total_dodges": 108,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "9/11/2025 16:20:33",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "adcabe2ff421b32777960561ef7b673d",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 135.96167,
+      "game_state": "Death",
+      "wave_name": "HARD",
+      "total_deaths": 19,
+      "total_parries": 237,
+      "total_dodges": 128,
+      "total_completions": 1
+    }
+  },
+  {
+    "eventTimestamp": "10/11/2025 14:21:22",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "878e634ef089bbc6c872e91236ba8045",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 136.949356,
+      "game_state": "Death",
+      "wave_name": "Unknown",
+      "total_deaths": 19,
+      "total_parries": 309,
+      "total_dodges": 160,
+      "total_completions": 2
+    }
+  },
+  {
+    "eventTimestamp": "10/11/2025 14:21:22",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "878e634ef089bbc6c872e91236ba8045",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 136.949356,
+      "game_state": "Death",
+      "wave_name": "COMPLETE",
+      "total_deaths": 19,
+      "total_parries": 309,
+      "total_dodges": 160,
+      "total_completions": 2
+    }
+  },
+  {
+    "eventTimestamp": "10/11/2025 17:24:08",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "0b3d98c64421c5ff86893f8f0d2cf56c",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 56.50356,
+      "game_state": "Death",
+      "wave_name": "EASY",
+      "total_deaths": 20,
+      "total_parries": 370,
+      "total_dodges": 186,
+      "total_completions": 2
+    }
+  },
+  {
+    "eventTimestamp": "10/11/2025 17:26:49",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "d5735a783bbdfec791870ee4d6cb2e22",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 89.2036362,
+      "game_state": "Death",
+      "wave_name": "MEDIUM",
+      "total_deaths": 21,
+      "total_parries": 389,
+      "total_dodges": 193,
+      "total_completions": 2
+    }
+  },
+  {
+    "eventTimestamp": "11/11/2025 15:06:06",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "8f17355047a2aaf4f1bdc6a5050a40f0",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 160.828049,
+      "game_state": "Completion",
+      "wave_name": "COMPLETE",
+      "total_deaths": 21,
+      "total_parries": 450,
+      "total_dodges": 218,
+      "total_completions": 3
+    }
+  },
+  {
+    "eventTimestamp": "11/11/2025 16:30:48",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "69cdb9ddbc146ba7f5535a28585ba49c",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 139.881775,
+      "game_state": "Completion",
+      "wave_name": "COMPLETE",
+      "total_deaths": 21,
+      "total_parries": 583,
+      "total_dodges": 274,
+      "total_completions": 4
+    }
+  }
+]
