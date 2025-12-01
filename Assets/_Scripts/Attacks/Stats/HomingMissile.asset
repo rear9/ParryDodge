@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackName: HomingMissile
   damage: 1
-  lifetime: 10
+  lifetime: 15
   parryable: 1
-  attackSpeed: 3
+  attackSpeed: 4
   attackColor: {r: 1, g: 0.2705882, b: 0, a: 1}

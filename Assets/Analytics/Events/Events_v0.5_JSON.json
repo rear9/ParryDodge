@@ -338,5 +338,22 @@
       "total_dodges": 274,
       "total_completions": 4
     }
+  },
+  {
+    "eventTimestamp": "24/11/2025 06:31:11",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "ef7d9e97119ff6d1b5861b987a36e21c",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 115.06839,
+      "game_state": "Completion",
+      "wave_name": "COMPLETE",
+      "total_deaths": 21,
+      "total_parries": 1101,
+      "total_dodges": 459,
+      "total_completions": 5
+    }
   }
 ]

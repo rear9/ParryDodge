@@ -35,6 +35,7 @@ public class CooldownUI : MonoBehaviour
 
     private IEnumerator Flash(Image img)
     {
+        AudioManager.PlaySFX(AudioManager.Instance.cooldownSFX);
         if (img == null) yield break;
         Color baseColor = img == parryImage ? _parryBaseColor : _dodgeBaseColor;
         

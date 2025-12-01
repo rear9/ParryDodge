@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HomingMissile : EnemyAttackCore, IEnemyAttack
 {
     [Header("Visuals")]
     [SerializeField] private SpriteRenderer missileRenderer;
+    [SerializeField] private GameObject explosion;
     [SerializeField] private SpriteRenderer explosionRenderer;
     [SerializeField] private CircleCollider2D explosionCollider;
-
+    [SerializeField] private ParticleSystem explosionParticles;
+    [SerializeField] private ParticleSystem parryParticles;
+    
     [Header("Attack")]
     [SerializeField] private float playerRotationSpeed = 180f; // slower homing to player
     [SerializeField] private float parryRotationSpeed = 720f;  // fast homing to targets
@@ -34,6 +38,18 @@ public class HomingMissile : EnemyAttackCore, IEnemyAttack
             var dir = (_player.position - transform.position).normalized;
             transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f);
         }
+        StartCoroutine(LifetimeWatcher());
+    }
+    
+    private IEnumerator LifetimeWatcher()
+    {
+        float delay = stats.lifetime - explosionDuration;
+        if (delay < 0f) delay = 0f;
+
+        yield return new WaitForSeconds(delay);
+
+        if (!_exploding && _active)
+            StartCoroutine(Explode());
     }
 
     private void FixedUpdate()
@@ -53,6 +69,14 @@ public class HomingMissile : EnemyAttackCore, IEnemyAttack
         // move forward
         _rb.MovePosition(_rb.position + (Vector2)transform.up * (stats.attackSpeed * Time.fixedDeltaTime));
     }
+    
+    private void SetLayerRecursive(int layer)
+    {
+        gameObject.layer = layer;
+        foreach (Transform child in transform)
+            child.gameObject.layer = layer;
+    }
+    
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (_exploding || !_active) return;
@@ -61,7 +85,7 @@ public class HomingMissile : EnemyAttackCore, IEnemyAttack
         if (layer == LayerMask.NameToLayer("Player") && gameObject.layer == LayerMask.NameToLayer("EnemyAttack"))
         {
             if (other.TryGetComponent(out PlayerHealth health)) health.TakeDamage(stats.damage); // take damage
-            StartCoroutine(Explode());
+            TriggerExplode();
         }
         else if (layer == LayerMask.NameToLayer("PlayerParry") && stats.parryable && !_playerHit)
         {
@@ -71,8 +95,14 @@ public class HomingMissile : EnemyAttackCore, IEnemyAttack
         }
         else if (other.TryGetComponent(out HomingMissile otherMissile))
         {
-            StartCoroutine(Explode()); // if it hits another missile, explode this and the colliding missile
+            TriggerExplode(); // if it hits another missile, explode this and the colliding missile
             otherMissile.TriggerExplode();
+        }
+        else if (layer == LayerMask.NameToLayer("PlayerAttack"))
+        {
+            gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
+            SetLayerRecursive(LayerMask.NameToLayer("PlayerAttack"));
+            TriggerExplode();
         }
         else if (other.CompareTag("ExplosiveAttack") || other.CompareTag("DestructibleAttack") || other.CompareTag("ReflectiveAttack"))
         {
@@ -82,17 +112,24 @@ public class HomingMissile : EnemyAttackCore, IEnemyAttack
             }
             else
             {
-                StartCoroutine(Explode());
+                TriggerExplode();
             }
         }
     }
 
     protected override void OnParried(Transform parrySource)
     {
+        SetLayerRecursive(LayerMask.NameToLayer("PlayerAttack"));
         Transform target = null;
         float nearestSqrDist = float.MaxValue;
         Vector2 pos = _rb.position;
-        GameManager.Instance.TriggerHitstop(0.05f);
+        if (parryParticles != null)
+        {
+            var parryParticlesMain = parryParticles.main;
+            parryParticlesMain.useUnscaledTime = true;
+            parryParticles.Play();
+        }
+        GameManager.Instance.TriggerHitstop();
         foreach (var a in AttackPoolManager.Instance.GetActiveAttacks())
         {
             if (a == gameObject) continue; // blacklists itself for reflection
@@ -120,50 +157,74 @@ public class HomingMissile : EnemyAttackCore, IEnemyAttack
 
     public void TriggerExplode() // helper for missile collisions
     {
-        if (!_exploding)
-            StartCoroutine(Explode());
+        StartCoroutine(Explode());
     }
 
-    private IEnumerator Explode() // explosion bubble
+    private IEnumerator Explode()
     {
         if (_exploding) yield break;
         _exploding = true;
         _active = false;
-        GameManager.Instance.TriggerHitstop(0.03f);
-        missileRenderer.enabled = false; // make missile invisible on explosion
+        missileRenderer.enabled = false;
+        
+        
+        if (explosionParticles != null) explosionParticles.Play();
+        GameManager.Instance.TriggerHitstop();
+        // start collision
+        if (explosionCollider) explosionCollider.enabled = true;
+        yield return new WaitForEndOfFrame();
+        
+        // store origin values
+        Color originalColor = explosionRenderer.color;
+        Quaternion originalRotation = explosionRenderer.transform.rotation;
+        float flashDuration = 0.2f; // quick white flash
+        Vector3 explosionScale = explosionRenderer.transform.localScale; // your final explosion size
+        float startAlpha = explosionRenderer.color.a;
+        
+        explosionRenderer.transform.localScale = Vector3.zero; // start at 0
         explosionRenderer.enabled = true;
+        Color startColor = originalColor;
 
-        if (explosionCollider)
+        float timer = 0f;
+        // ---- Explosion animation ----
+        while (timer < explosionDuration)
         {
-            explosionCollider.enabled = true;
+            timer += Time.unscaledDeltaTime;
+            float t = timer / explosionDuration;
 
-            Collider2D[] hits = Physics2D.OverlapCircleAll( // make explosion bubble trigger collisions for chain-reaction
-                explosionCollider.transform.position,
-                explosionCollider.radius,
-                LayerMask.GetMask("Player", "EnemyAttack")
-            );
+            // SCALE (ease-out cubic)
+            float eased = 1f - Mathf.Pow(1f - Mathf.Clamp01(t), 3f);
+            explosionRenderer.transform.localScale = Vector3.Lerp(Vector3.zero, explosionScale, eased);
 
-            foreach (var hit in hits)
+            // COLOR
+            Color c;
+
+            if (timer < flashDuration)
             {
-                if (hit.gameObject.layer == LayerMask.NameToLayer("Player") &&
-                    gameObject.layer == LayerMask.NameToLayer("EnemyAttack") &&
-                    hit.TryGetComponent(out PlayerHealth health))
-                {
-                    health.TakeDamage(1f); // missile doesn't deal damage on contact, explosion will deal damage if it is still an enemy attack
-                }
-
-                if (hit.TryGetComponent(out EnemyAttackCore enemyAtk) &&
-                    gameObject.layer == LayerMask.NameToLayer("PlayerAttack"))
-                {
-                    enemyAtk.gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
-                }
+                // Flash white, maintain constant original alpha
+                float flashT = timer / flashDuration;
+                c = Color.Lerp(Color.white, startColor, flashT);
+                c.a = startAlpha;                           // maintain 0.15
+            }
+            else
+            {
+                // Fade alpha 0.15 -> 0 over the remainder
+                float fadeT = (timer - flashDuration) / (explosionDuration - flashDuration);
+                c = startColor;
+                c.a = Mathf.Lerp(startAlpha, 0f, fadeT);    // fade to 0
             }
 
-            explosionCollider.enabled = false;
-        }
+            explosionRenderer.color = c;
 
-        yield return new WaitForSeconds(explosionDuration);
+            yield return null;
+        }
+        
+        // Reset to original state
+        explosionCollider.enabled = false;
         explosionRenderer.enabled = false;
+        explosionRenderer.transform.localScale = explosionScale;
+        explosionRenderer.transform.rotation = originalRotation;
+        explosionRenderer.color = originalColor;
         ReturnToPool();
     }
 }

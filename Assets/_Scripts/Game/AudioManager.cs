@@ -24,8 +24,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip areaSFX;
     public AudioClip missileLoopSFX;
     public AudioClip explosionSFX;
-    
-    [Header("UI")]
+
+    [Header("UI")] 
+    public AudioClip tickSFX;
+    public AudioClip cooldownSFX;
     public AudioClip menuPressSFX;
     public AudioClip menuHoverSFX;
 

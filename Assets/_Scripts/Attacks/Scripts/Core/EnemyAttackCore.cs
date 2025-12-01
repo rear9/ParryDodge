@@ -33,6 +33,13 @@ public abstract class EnemyAttackCore : MonoBehaviour
             OnParried(other.transform);
             plrActions.ParrySuccess();
         }
+        else if (other.CompareTag("ExplosiveAttack") || other.CompareTag("DestructibleAttack") || other.CompareTag("ReflectiveAttack"))
+        {
+            if (gameObject.layer == LayerMask.NameToLayer("PlayerAttack")) // if it collides with a player attack, make this attack unable to damage player
+            {
+                other.gameObject.layer = LayerMask.NameToLayer("PlayerAttack");
+            }
+        }
         else if (layer == LayerMask.NameToLayer("Player") && gameObject.layer != LayerMask.NameToLayer("PlayerAttack")) // if player isn't performing an action
         {
             if (_playerHit) return;

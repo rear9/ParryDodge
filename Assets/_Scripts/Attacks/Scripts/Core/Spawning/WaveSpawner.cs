@@ -35,6 +35,10 @@ public class WaveSpawner : MonoBehaviour
     private IEnumerator WaveRoutine() // main loop
     {
         StatsManager.Instance.SetGameState("Play");
+        if(MenuManager.SkipTutorial)
+        {
+            yield return new WaitForSeconds(waveStartDelay);
+        }
         yield return new WaitForSeconds(waveStartDelay);
         UIManager _ui = FindFirstObjectByType<UIManager>();
         foreach (var wave in waves) // for each wave, update UI

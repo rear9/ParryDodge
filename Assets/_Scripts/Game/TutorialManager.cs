@@ -81,6 +81,13 @@ public class TutorialManager : MonoBehaviour // comment all below this in explor
     
     public void StartTutorial()
     {
+        if (MenuManager.SkipTutorial)
+        {
+            // skip tutorial, enable waves immediately
+            print("Tutorial Skipped.");
+            if (waveSpawner != null) waveSpawner.enabled = true;
+            return;
+        }
         if (waveSpawner != null && waveSpawner.enabled) waveSpawner.enabled = false; // make sure waves dont start before the tutorial
         StartCoroutine(TutorialSequence()); 
     }
@@ -131,7 +138,7 @@ public class TutorialManager : MonoBehaviour // comment all below this in explor
         // --- normal gameplay ---
         currentStep = TutorialState.None;
         yield return new WaitForSecondsRealtime(5f);
-        waveSpawner.enabled = true;
+        if (waveSpawner != null) waveSpawner.enabled = true;
         print("Tutorial done.");
     }
     

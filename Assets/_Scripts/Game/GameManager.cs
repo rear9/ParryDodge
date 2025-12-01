@@ -7,7 +7,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     [SerializeField] private PlayerColor playerColor;
     [SerializeField] private TutorialManager tutorialManager;
+    private float _hitstopTimer = 0f;
+    private bool _hitstopActive = false;
     private bool fromMenu;
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,25 +32,33 @@ public class GameManager : MonoBehaviour
         if (tutorialManager != null) tutorialManager.StartTutorial(); // start tutorial once player is visible
     }
 
-        public void TriggerHitstop(float duration = 0.016f) // public hitstop trigger to get called through instance
+    private void Update()
+    {
+        if (_hitstopTimer > 0f)
         {
-            StartCoroutine(HitstopCoroutine(duration));
-        }
-    
-        private IEnumerator HitstopCoroutine(float duration)
-        {
-            float previousTimeScale = Time.timeScale;
-            Time.timeScale = 0f;  // freeze game
+            Time.timeScale = 0f;
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
-            yield return new WaitForSecondsRealtime(duration); // real-time wait
-            Time.timeScale = previousTimeScale; // unfreeze
-            Time.fixedDeltaTime = 0.02f;
+            _hitstopTimer -= Time.unscaledDeltaTime;
         }
+        else if (_hitstopActive)
+        {
+            // restore time
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = 0.02f;
+            _hitstopActive = false;
+        }
+    }
+    
+    public void TriggerHitstop(float duration = 0.016f)
+    {
+        _hitstopTimer = Mathf.Max(_hitstopTimer, duration); // extend timer if longer than current
+        _hitstopActive = true;
+    }
     
     public static void StartGame() // for menu play button
     {
         AudioManager.Instance.StartCoroutine(AudioManager.Instance.CrossfadeMusic(AudioManager.Instance.levelMusic,1f));
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("Stage");
         Cursor.visible = false;
     }
 

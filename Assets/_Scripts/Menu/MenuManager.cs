@@ -13,14 +13,24 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Toggle tutorialToggle;
     private bool isUsingController;
 
+    private const string TUTORIAL_KEY = "SkipTutorial";
+    public static bool SkipTutorial { get; private set; }
     private void Start()
     {
         Cursor.visible = true;
         
         playButton.onClick.AddListener(GameManager.StartGame);
         quitButton.onClick.AddListener(GameManager.QuitGame);
+        
+        if (tutorialToggle != null)
+        {
+            tutorialToggle.isOn = PlayerPrefs.GetInt(TUTORIAL_KEY, 0) == 1;
+            tutorialToggle.onValueChanged.AddListener(TutorialToggleChanged);
+            SkipTutorial = tutorialToggle.isOn;
+        }
         
         if (AudioManager.Instance != null)
         {
@@ -37,7 +47,15 @@ public class MenuManager : MonoBehaviour
             sfx.hoverSFX = AudioManager.Instance.menuHoverSFX;
             sfx.clickSFX = AudioManager.Instance.menuPressSFX;
         }
-    } 
+    }
+    
+    private void TutorialToggleChanged(bool isOn)
+    {
+        AudioManager.PlaySFX(AudioManager.Instance.tickSFX);
+        PlayerPrefs.SetInt(TUTORIAL_KEY, isOn ? 1 : 0);
+        PlayerPrefs.Save();
+        SkipTutorial = isOn;
+    }
     void Update()
     {
         // check for controller input (stick movement or button press)
