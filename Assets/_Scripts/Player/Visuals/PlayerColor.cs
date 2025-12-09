@@ -16,7 +16,7 @@ public class PlayerColor : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
     }
-    public IEnumerator ColorSprite(Color clr)
+    public IEnumerator ColorSprite(Color clr) // for parry/dodging visual colours
     {
         float time = 0;
         while (time < colourSpeed)
@@ -32,28 +32,36 @@ public class PlayerColor : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(FadeInRoutine(delay));
     }
-
     private IEnumerator FadeInRoutine(float delay)
     {
+        // get and apply saved color with alpha 0
+        Color savedColor = MenuManager.GetSavedPlayerColor();
+        Color startColor = new Color(savedColor.r, savedColor.g, savedColor.b, 0f);
+        sr.color = startColor;
+        
+        // ypdate neutral color to use the saved hue for gameplay
+        neutralColor = savedColor;
+        
+        // wait for delay
         if (delay > 0f)
         {
             yield return new WaitForSeconds(delay);
         }
-        Color c = sr.color;
-        c.a = 0f;
-        sr.color = c;
 
+        // ensure we're still at alpha 0 after delay
+        sr.color = startColor;
+
+        // fade in
+        Color targetColor = new Color(savedColor.r, savedColor.g, savedColor.b, 1f);
         float t = 0f;
         while (t < fadeDuration)
         {
             t += Time.deltaTime;
-            c.a = Mathf.Lerp(0f, 1f, t / fadeDuration);
-            sr.color = c;
+            float alpha = Mathf.Lerp(0f, 1f, t / fadeDuration);
+            sr.color = new Color(savedColor.r, savedColor.g, savedColor.b, alpha);
             yield return null;
         }
 
-        c.a = 1f;
-        sr.color = c;
+        sr.color = targetColor;
     }
-    
 }

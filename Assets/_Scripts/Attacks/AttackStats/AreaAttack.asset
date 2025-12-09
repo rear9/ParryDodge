@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba1e20e687af44a4c8ab238646a7dca9, type: 3}
+  m_Name: AreaAttack
+  m_EditorClassIdentifier: 
+  attackName: AreaAttack
+  damage: 1
+  lifetime: 4
+  parryable: 0
+  attackSpeed: 0
+  attackColor: {r: 0.104396604, g: 0.59134656, b: 0.9622642, a: 1}

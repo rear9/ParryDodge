@@ -5,7 +5,8 @@ public class UIButtonSFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
 {
     public AudioClip hoverSFX;
     public AudioClip clickSFX;
-
+    // this script gets attached by MenuManager to all present buttons in scene
+    // below are subscribe events for both keyboard/controller inputs
     public void OnPointerEnter(PointerEventData eventData)
     {
         PlayHover();
@@ -22,7 +23,7 @@ public class UIButtonSFX : MonoBehaviour, IPointerEnterHandler, IPointerClickHan
     {
         PlayClick();
     }
-    private void PlayHover()
+    private void PlayHover() // audio playing events
     {
         if (hoverSFX != null)
             AudioManager.PlaySFX(hoverSFX);

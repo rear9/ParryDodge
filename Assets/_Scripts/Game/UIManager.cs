@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private TMP_Text stageText;
+    [SerializeField] private TMP_Text waveText;
     [SerializeField] private TMP_Text hpText;
 
     public string currentWaveName = "";

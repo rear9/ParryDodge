@@ -98,9 +98,8 @@ public class WaveSpawner : MonoBehaviour
         _ui.UpdateWaveName("COMPLETE"); // if all waves complete
         StatsManager.Instance.SetGameState("Completion");
         StatsManager.Instance.RecordCompletion();
-        StatsManager.Instance.RecordFull(_ui.GetCurrentWaveName()); // stat-tracking
-        StartCoroutine(AudioManager.Instance.CrossfadeMusic(AudioManager.Instance.menuMusic,1f));
-        yield return StartCoroutine(TransitionHandler.Instance.FadeOut(2f));
-        GameManager.ReturnToMenu();
+        StatsManager.Instance.RecordFull(_ui.GetCurrentWaveName()); // completion collection hook
+        yield return new WaitForSecondsRealtime(2f);
+        GameManager.Instance.ReturnToMenu();
     }
 }

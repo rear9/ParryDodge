@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Attack Stats", fileName = "NewAttackStats")]
+[CreateAssetMenu(menuName = "Attack Stats", fileName = "NewAttackStats")] // reusable ScriptableObject creator for attack data
 public class AttackStats : ScriptableObject
 {
     [Header("General")] 

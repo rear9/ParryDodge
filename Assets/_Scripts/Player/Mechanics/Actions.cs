@@ -15,7 +15,7 @@ public class Actions : MonoBehaviour
     public float parryFailCd;
 
     [Header("Dodge Settings")] 
-    private float _dodgeSpeed;
+    private float _moveSpeed;
     public float dodgeWindow;
     public float dodgeCd;
     public float dodgeSpeedMult;
@@ -29,7 +29,7 @@ public class Actions : MonoBehaviour
     private Collider2D _parriedAttack; // for debugging
     void Awake()
     {
-        _dodgeSpeed = movement.speed;
+        _moveSpeed = movement.speed; // i forgot why i put this here but it resets speed
     }
     public void StartParry()
     {
@@ -38,36 +38,36 @@ public class Actions : MonoBehaviour
     }
     private IEnumerator ParryRoutine() // parry mechanic
     {
+        gameObject.layer = LayerMask.NameToLayer("PlayerParry");
         _parryHit = false;
         _parrying = true;
         
-        gameObject.layer = LayerMask.NameToLayer("PlayerParry");
-        StartCoroutine(plrColor.ColorSprite(plrColor.parryColor));
         
+        StartCoroutine(plrColor.ColorSprite(plrColor.parryColor));
         float timer = 0f;
         while (timer < parryWindow && !_parryHit) // parry window timer
         {
             timer += Time.deltaTime;
             yield return null;
         }
-
         StartCoroutine(plrColor.ColorSprite(plrColor.neutralColor));
-        _parrying = false;
-        gameObject.layer = LayerMask.NameToLayer("Player");
+
         if (!_parryHit)
         {
             _parryCdActive = true;
             cooldownUI?.StartParryCooldown(parryFailCd);
-            yield return new WaitForSeconds(parryFailCd); // Counter parry spam
+            yield return new WaitForSeconds(parryFailCd); // to prevent parry spam
             _parryCdActive = false;
         }
+        gameObject.layer = LayerMask.NameToLayer("Player");
+        _parrying = false;
     }
-    public void ParrySuccess()
+    public void ParrySuccess() // parry cooldown refresh function (this gets called by attack scripts if they collide with a parry)
     {
+        _parryHit = true;
         StatsManager.Instance.RecordParry(); 
         AudioManager.PlaySFX(AudioManager.Instance.parrySFX);
         CameraShakerHandler.Shake(parryShakeData);
-        _parryHit = true;
     }
     public void StartDodge()
     {
@@ -91,19 +91,19 @@ public class Actions : MonoBehaviour
 
         StartCoroutine(plrColor.ColorSprite(plrColor.neutralColor));
         _dodging = false; // end of player invulnerability
-        movement.speed = _dodgeSpeed;
+        movement.speed = _moveSpeed;
         gameObject.layer = LayerMask.NameToLayer("Player");
         _dodgeCdActive = true; // start dodge cd
         cooldownUI?.StartDodgeCooldown(dodgeCd);
         yield return new WaitForSeconds(dodgeCd);
         _dodgeCdActive = false;
     }
-    public void CancelDodge()
+    public void CancelDodge() // to set boolean and reset speed
     {
         if (_dodging)
         {
             _dodging = false;
-            movement.speed = _dodgeSpeed;
+            movement.speed = _moveSpeed;
         }
     }
 }

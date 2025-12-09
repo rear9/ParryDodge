@@ -54,10 +54,19 @@ public class InputHandler : MonoBehaviour
         _controls.Player.Dodge.canceled += ctx =>
         {
             _actions.CancelDodge();
-        }; 
+        };
+        // Pause (to be used in main scene)
+        _controls.Player.Pause.performed += ctx =>
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.TogglePause();
+            }
+        };
+
     }
 
-    public void SetTutorialMode(bool enabled, int stage)
+    public void SetTutorialMode(bool enabled, int stage) // function to allow/disallow specific player inputs, dependent on tutorial stage
     {
         if (stage == 1)
         {

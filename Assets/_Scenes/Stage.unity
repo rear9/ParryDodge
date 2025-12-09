@@ -376,7 +376,7 @@ GameObject:
   m_Component:
   - component: {fileID: 152600330}
   m_Layer: 0
-  m_Name: TL
+  m_Name: 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -533,7 +533,7 @@ GameObject:
   m_Component:
   - component: {fileID: 435206433}
   m_Layer: 0
-  m_Name: BL
+  m_Name: 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -781,7 +781,7 @@ GameObject:
   m_Component:
   - component: {fileID: 478561091}
   m_Layer: 0
-  m_Name: T
+  m_Name: 12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1109,9 +1109,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '
-
-'
+  m_text: TUTORIAL
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5ed86559efa97a24686b884b2ae59be6, type: 2}
   m_sharedMaterial: {fileID: -3884857614528661167, guid: 5ed86559efa97a24686b884b2ae59be6, type: 2}
@@ -1252,7 +1250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 693339877}
   m_Layer: 0
-  m_Name: BR2
+  m_Name: 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1485,17 +1483,17 @@ MonoBehaviour:
       attackCount: 1
       attackDelay: 3
       spawnPoint: {fileID: 1544359239}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 0}
     - attackName: HomingMissile
-      attackCount: 3
+      attackCount: 2
       attackDelay: 0.15
       spawnPoint: {fileID: 0}
     - attackName: FastBullet
       attackCount: 5
       attackDelay: 0.7
+      spawnPoint: {fileID: 0}
+    - attackName: LineSweep
+      attackCount: 1
+      attackDelay: 0
       spawnPoint: {fileID: 0}
     - attackName: FastBullet
       attackCount: 5
@@ -1573,7 +1571,7 @@ MonoBehaviour:
       attackDelay: 2
       spawnPoint: {fileID: 0}
     - attackName: HomingMissile
-      attackCount: 6
+      attackCount: 4
       attackDelay: 0.05
       spawnPoint: {fileID: 0}
     - attackName: FastBullet
@@ -1581,6 +1579,141 @@ MonoBehaviour:
       attackDelay: 0.3
       spawnPoint: {fileID: 0}
     waveDelay: 5
+  - waveName: FINALE
+    waveAttacks:
+    - attackName: LineSweep
+      attackCount: 1
+      attackDelay: 0
+      spawnPoint: {fileID: 478561091}
+    - attackName: LineSweep
+      attackCount: 1
+      attackDelay: 0
+      spawnPoint: {fileID: 1609317095}
+    - attackName: LineSweep
+      attackCount: 1
+      attackDelay: 0
+      spawnPoint: {fileID: 1818168671}
+    - attackName: LineSweep
+      attackCount: 1
+      attackDelay: 3
+      spawnPoint: {fileID: 1683064235}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 478561091}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 1946619347}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 1299173307}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 1683064235}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 1147292039}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 693339877}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 1609317095}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 2095285394}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 435206433}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 1818168671}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 152600330}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.2
+      spawnPoint: {fileID: 1868207971}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 1
+      spawnPoint: {fileID: 478561091}
+    - attackName: HomingMissile
+      attackCount: 1
+      attackDelay: 0
+      spawnPoint: {fileID: 1946619347}
+    - attackName: HomingMissile
+      attackCount: 1
+      attackDelay: 0
+      spawnPoint: {fileID: 1147292039}
+    - attackName: HomingMissile
+      attackCount: 1
+      attackDelay: 0
+      spawnPoint: {fileID: 2095285394}
+    - attackName: HomingMissile
+      attackCount: 1
+      attackDelay: 0
+      spawnPoint: {fileID: 152600330}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.15
+      spawnPoint: {fileID: 478561091}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.15
+      spawnPoint: {fileID: 1683064235}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.15
+      spawnPoint: {fileID: 1609317095}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 0.15
+      spawnPoint: {fileID: 1818168671}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 2
+      spawnPoint: {fileID: 478561091}
+    - attackName: FastBullet
+      attackCount: 6
+      attackDelay: 0.1
+      spawnPoint: {fileID: 0}
+    - attackName: FastBullet
+      attackCount: 6
+      attackDelay: 0.2
+      spawnPoint: {fileID: 0}
+    - attackName: FastBullet
+      attackCount: 6
+      attackDelay: 0.4
+      spawnPoint: {fileID: 0}
+    - attackName: FastBullet
+      attackCount: 6
+      attackDelay: 0.8
+      spawnPoint: {fileID: 0}
+    - attackName: FastBullet
+      attackCount: 2
+      attackDelay: 1
+      spawnPoint: {fileID: 0}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 1.5
+      spawnPoint: {fileID: 0}
+    - attackName: FastBullet
+      attackCount: 1
+      attackDelay: 2
+      spawnPoint: {fileID: 0}
+    waveDelay: 3
 --- !u!4 &826903503
 Transform:
   m_ObjectHideFlags: 0
@@ -1797,22 +1930,22 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1946619347}
+  - {fileID: 1299173307}
+  - {fileID: 1683064235}
+  - {fileID: 1147292039}
+  - {fileID: 693339877}
+  - {fileID: 1609317095}
+  - {fileID: 2095285394}
+  - {fileID: 435206433}
+  - {fileID: 1818168671}
   - {fileID: 152600330}
   - {fileID: 1868207971}
   - {fileID: 478561091}
-  - {fileID: 435206433}
-  - {fileID: 2095285394}
-  - {fileID: 1609317095}
   - {fileID: 1544359239}
   - {fileID: 12521445}
   - {fileID: 1585258987}
   - {fileID: 1618799906}
-  - {fileID: 1299173307}
-  - {fileID: 1946619347}
-  - {fileID: 1683064235}
-  - {fileID: 1818168671}
-  - {fileID: 1147292039}
-  - {fileID: 693339877}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1085349783
@@ -1912,7 +2045,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1147292039}
   m_Layer: 0
-  m_Name: BR
+  m_Name: 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1976,7 +2109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1299173307}
   m_Layer: 0
-  m_Name: TR
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2068,7 +2201,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: -3646000867310168507, guid: 1e9750ec37dcb564cbbd52c8880b6cad, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2219,7 +2352,7 @@ MonoBehaviour:
   dodgeColor: {r: 0.3, g: 0.6, b: 1, a: 1}
   sr: {fileID: 1306051336}
   colourSpeed: 0.2
-  fadeDuration: 1
+  fadeDuration: 2
 --- !u!114 &1306051346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2731,7 +2864,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1609317095}
   m_Layer: 0
-  m_Name: B
+  m_Name: 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2982,7 +3115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1683064235}
   m_Layer: 0
-  m_Name: R
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3163,7 +3296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1818168671}
   m_Layer: 0
-  m_Name: L
+  m_Name: 9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3194,7 +3327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1868207971}
   m_Layer: 0
-  m_Name: TL2
+  m_Name: 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3420,7 +3553,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1946619347}
   m_Layer: 0
-  m_Name: TR2
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3498,7 +3631,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'ParryDodge v0.8
+  m_text: 'ParryDodge v0.9
 
 
 '
@@ -3728,7 +3861,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2095285394}
   m_Layer: 0
-  m_Name: BL2
+  m_Name: 7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3881,6 +4014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stageText: {fileID: 596945534}
+  waveText: {fileID: 0}
   hpText: {fileID: 448922708}
   currentWaveName: TUTORIAL
 --- !u!1001 &4209880821955904446
@@ -4004,15 +4138,15 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 104410170}
   - {fileID: 519420032}
   - {fileID: 4209880821955904446}
-  - {fileID: 104410170}
   - {fileID: 1306051337}
   - {fileID: 999652795}
   - {fileID: 1373179321}
   - {fileID: 948827437}
-  - {fileID: 2143080047}
   - {fileID: 630238588}
-  - {fileID: 826903503}
-  - {fileID: 1555869849}
   - {fileID: 448469600}
+  - {fileID: 1555869849}
+  - {fileID: 2143080047}
+  - {fileID: 826903503}

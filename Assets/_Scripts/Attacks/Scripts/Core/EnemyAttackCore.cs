@@ -30,8 +30,8 @@ public abstract class EnemyAttackCore : MonoBehaviour
             // stop duplicate triggers, refresh player parry cooldown
             if (_playerHit) return;
             _playerHit = true;
-            OnParried(other.transform);
             plrActions.ParrySuccess();
+            OnParried(other.transform);
         }
         else if (other.CompareTag("ExplosiveAttack") || other.CompareTag("DestructibleAttack") || other.CompareTag("ReflectiveAttack"))
         {

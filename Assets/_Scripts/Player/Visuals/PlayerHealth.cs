@@ -25,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
         if (hitScreen != null) hitScreen.enabled = false;
     }
 
-    public void TakeDamage(float dmg)
+    public void TakeDamage(float dmg) // plays sfx, updates UI and flashes screen, calls death function if HP is 0
     {
         _currentHP -= dmg;
         AudioManager.PlaySFX(AudioManager.Instance.hitSFX);
@@ -40,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
         if (hitScreen == null || playerSprite == null)
             yield break;
 
-        // Save original color
+        // save original color
         Color screenColor = hitScreen.color;
         Color playerColor = playerSprite.color;
 
@@ -53,7 +53,7 @@ public class PlayerHealth : MonoBehaviour
         {
             elapsed += Time.deltaTime;
 
-            // Screen overlay: fade in/out
+            // fade in/out
             if (elapsed < halfDuration)
             {
                 screenColor.a = Mathf.Lerp(0f, 0.5f, elapsed / halfDuration);
@@ -64,8 +64,8 @@ public class PlayerHealth : MonoBehaviour
             }
             hitScreen.color = screenColor;
 
-            // Player flash: flash white briefly at the start
-            if (elapsed < 0.05f) // quick white flash
+            // flash player white
+            if (elapsed < 0.05f)
             {
                 playerSprite.color = Color.white;
             }
@@ -78,14 +78,14 @@ public class PlayerHealth : MonoBehaviour
         }
 
         hitScreen.enabled = false;
-        playerSprite.color = playerColor; // ensure original color restored
+        playerSprite.color = playerColor; // make sure original color restored
     }
     
-    private IEnumerator Die() // record death in stats and send player back to main menu for now
+    private IEnumerator Die() // record death in stats and send player back to main menu
     {
         AttackPoolManager.Instance?.ReturnAllToPool();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponents<CircleCollider2D>()[1].enabled = false;
+        player.GetComponents<CircleCollider2D>()[1].enabled = false; // disabling colliders so the player can't collide with multiple attacks at the same time and 'die more than once'
         player.GetComponents<CircleCollider2D>()[0].enabled = false;
         Time.timeScale = 0.1f;
         StartCoroutine(AudioManager.Instance.FadeOutMusic(0));
@@ -96,17 +96,17 @@ public class PlayerHealth : MonoBehaviour
             playerSprite.sprite = deathSprite;
         }
         yield return new WaitForSecondsRealtime(1f);
+        AttackPoolManager.Instance?.ReturnAllToPool(); // make sure there aren't any attacks that just spawned randomly after the delay
         if (StatsManager.Instance != null && _ui != null)
         {
             string currentWave = _ui != null ? _ui.GetCurrentWaveName() : "N/A";
-            StatsManager.Instance.SetGameState("Death");
-            StatsManager.Instance.RecordDeath(currentWave);
+            StatsManager.Instance.SetGameState("Death"); // set states and send data
+            StatsManager.Instance.RecordDeath(currentWave); // death data collection hook
         }
-        
         // Return to menu after death
         if (GameManager.Instance != null)
         {
-            GameManager.ReturnToMenu();
+            GameManager.Instance.ReturnToMenu();
             Time.timeScale = 1;
         }
     }

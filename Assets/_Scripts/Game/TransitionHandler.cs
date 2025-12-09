@@ -22,14 +22,16 @@ public class TransitionHandler : MonoBehaviour // for smooth scene transitions
 
     public IEnumerator FadeOut(float duration = 1f) // fade to black
     {
+        fadeDuration = duration;
         yield return Fade(0f, 1f);
     }
 
     public IEnumerator FadeIn(float duration = 1f) // fade from black
     {
+        fadeDuration = duration;
         yield return Fade(1f, 0f);
     }
-
+    
     private IEnumerator Fade(float start, float end) // colour alpha lerp
     {
         fadeImage.gameObject.SetActive(true);
@@ -37,7 +39,7 @@ public class TransitionHandler : MonoBehaviour // for smooth scene transitions
         Color c = fadeImage.color;
         while (t < fadeDuration)
         {
-            t += Time.deltaTime;
+            t += Time.unscaledDeltaTime;
             float alpha = Mathf.Lerp(start, end, t / fadeDuration);
             fadeImage.color = new Color(c.r, c.g, c.b, alpha);
             yield return null;

@@ -57,6 +57,16 @@ public class AudioManager : MonoBehaviour
             sfxSources[i] = src;
         }
     }
+    private void Start()
+    {
+        musicSource.volume = 0f;
+        masterVolume = PlayerPrefs.GetFloat("MasterVolume", .5f);
+        musicVolume = PlayerPrefs.GetFloat("MusicVolume", .5f); // set volume preferences from local data
+        sfxVolume = PlayerPrefs.GetFloat("SFXVolume", .5f);
+        ApplyVolume();
+        foreach (var src in sfxSources) src.volume = MapSliderToVolume(sfxVolume); // adjust volume-slider ratio
+        StartCoroutine(FadeInMusicWithPanel(menuMusic, 2f, true)); // start loading buffer
+    }
     
     private float MapSliderToVolume(float sliderValue)
     {
@@ -73,16 +83,6 @@ public class AudioManager : MonoBehaviour
             src.volume = mappedSFX;
     }
     
-    private void Start()
-    {
-        musicSource.volume = 0f;
-        masterVolume = PlayerPrefs.GetFloat("MasterVolume", .5f);
-        musicVolume = PlayerPrefs.GetFloat("MusicVolume", .5f); // set volume preferences from local data
-        sfxVolume = PlayerPrefs.GetFloat("SFXVolume", .5f);
-        ApplyVolume();
-        foreach (var src in sfxSources) src.volume = MapSliderToVolume(sfxVolume); // adjust volume-slider ratio
-        StartCoroutine(FadeInMusicWithPanel(menuMusic, 2f, true)); // start loading buffer
-    }
     private IEnumerator FadeInMusicWithPanel(AudioClip clip, float fadeDuration, bool loop)
     {
         yield return new WaitForSeconds(2f);
