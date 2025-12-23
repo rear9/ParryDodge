@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class GlobalStatLogger : MonoBehaviour 
 {   // inspired from "Unity to Google Spreadsheet - Sending Data the Easy Way" -- https://www.youtube.com/watch?v=WM7f4yN4ZHA --
     private const string SheetURL =
-        "https://script.google.com/macros/s/AKfycbyjq_SItdFj1FPUAeS_aaH0GhwesN0nAxVzSkqiYngC1XTDUDBWKQirmwL4z-hY6WS-Wg/exec";
+        "https://script.google.com/macros/s/AKfycbydmhiZepOSrfFyeMmMnUysHKlMwH6uT9Ljh2llaxUGLpC9NdANtiICUKevWG0Xy8dS/exec";
 
     public static IEnumerator SendToGoogleSheet(Dictionary<string, object> data) // called from StatsManager
     {
@@ -30,7 +30,7 @@ public class GlobalStatLogger : MonoBehaviour
         public string player_id; // explicit fields that will become json keys
         public float time;
         public string game_state;
-        public string wave_name;
+        public int stage_progression;
         public int total_deaths;
         public int total_parries;
         public int total_dodges;
@@ -41,7 +41,7 @@ public class GlobalStatLogger : MonoBehaviour
             player_id = d["player_id"].ToString();
             time = Convert.ToSingle(d["time"]);
             game_state = d["game_state"].ToString();
-            wave_name = d["wave_name"].ToString();
+            stage_progression = Convert.ToInt32(d["stage_progression"]);
             total_deaths = Convert.ToInt32(d["total_deaths"]);
             total_parries = Convert.ToInt32(d["total_parries"]);
             total_dodges = Convert.ToInt32(d["total_dodges"]);

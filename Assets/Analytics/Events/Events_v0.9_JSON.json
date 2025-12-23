@@ -695,5 +695,56 @@
       "total_dodges": 537,
       "total_completions": 6
     }
+  },
+  {
+    "eventTimestamp": "20/12/2025 08:43:07",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "2e29b79bf9676a43d4b2aa0a28f66575",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 17.1210556,
+      "game_state": "Play",
+      "highest_cleared_stage": 0,
+      "total_deaths": 23,
+      "total_parries": 1327,
+      "total_dodges": 537,
+      "total_completions": 6
+    }
+  },
+  {
+    "eventTimestamp": "20/12/2025 08:43:08",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "da98fd94777759d7cc1c4845bd4ed5a5",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 17.7735825,
+      "game_state": "Completion",
+      "highest_cleared_stage": 1,
+      "total_deaths": 23,
+      "total_parries": 1327,
+      "total_dodges": 537,
+      "total_completions": 7
+    }
+  },
+  {
+    "eventTimestamp": "20/12/2025 08:57:33",
+    "userID": "NULL",
+    "eventName": "Stats",
+    "eventUUID": "8b75be7f0e38cc45d6c7a9d9e7c2d588",
+    "GA_Value": 0.0,
+    "eventParams": {
+      "player_id": "3c0545b3-69c7-42c9-9a97-d8df56494d76",
+      "time": 12.22909,
+      "game_state": "Play",
+      "highest_cleared_stage": 1,
+      "total_deaths": 23,
+      "total_parries": 1327,
+      "total_dodges": 537,
+      "total_completions": 7
+    }
   }
 ]

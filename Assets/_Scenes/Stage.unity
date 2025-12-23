@@ -1076,10 +1076,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1349704202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 600, y: 110}
-  m_SizeDelta: {x: 500, y: 50}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &596945533
 CanvasRenderer:
@@ -1109,7 +1109,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TUTORIAL
+  m_text: LOREM IPSUM
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5ed86559efa97a24686b884b2ae59be6, type: 2}
   m_sharedMaterial: {fileID: -3884857614528661167, guid: 5ed86559efa97a24686b884b2ae59be6, type: 2}
@@ -1136,8 +1136,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 82
-  m_fontSizeBase: 82
+  m_fontSize: 64
+  m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1346,6 +1346,142 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &800589201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 800589202}
+  - component: {fileID: 800589204}
+  - component: {fileID: 800589203}
+  m_Layer: 5
+  m_Name: XP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &800589202
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800589201}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1349704202}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -300, y: 110}
+  m_SizeDelta: {x: 400, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &800589203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800589201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: LV 1
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 5ed86559efa97a24686b884b2ae59be6, type: 2}
+  m_sharedMaterial: {fileID: -3884857614528661167, guid: 5ed86559efa97a24686b884b2ae59be6, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 82
+  m_fontSizeBase: 82
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &800589204
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800589201}
+  m_CullTransparentMesh: 1
 --- !u!1 &815188921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,7 +1548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb49fbaf3dc318419e64bb67016d126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveStartDelay: 2
+  defaultWaveStartDelay: 3
   spawnPoints:
   - {fileID: 152600330}
   - {fileID: 1868207971}
@@ -1426,294 +1562,27 @@ MonoBehaviour:
   - {fileID: 1683064235}
   - {fileID: 478561091}
   - {fileID: 1609317095}
-  waves:
-  - waveName: TUTORIAL
-    waveAttacks:
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 2
-      spawnPoint: {fileID: 1683064235}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 2
-      spawnPoint: {fileID: 1818168671}
-    waveDelay: 1
-  - waveName: EASY
-    waveAttacks:
-    - attackName: LineSweep
-      attackCount: 3
-      attackDelay: 2.2
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 8
-      attackDelay: 1
-      spawnPoint: {fileID: 0}
-    - attackName: AreaAttackH
-      attackCount: 1
-      attackDelay: 1.5
-      spawnPoint: {fileID: 1544359239}
-    - attackName: HomingMissile
-      attackCount: 1
-      attackDelay: 0.4
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 4
-      attackDelay: 1
-      spawnPoint: {fileID: 0}
-    waveDelay: 2
-  - waveName: MEDIUM
-    waveAttacks:
-    - attackName: FastBullet
-      attackCount: 8
-      attackDelay: 1
-      spawnPoint: {fileID: 0}
-    - attackName: LineSweep
-      attackCount: 3
-      attackDelay: 2
-      spawnPoint: {fileID: 0}
-    - attackName: AreaAttackH
-      attackCount: 1
-      attackDelay: 3
-      spawnPoint: {fileID: 1544359239}
-    - attackName: FastBullet
-      attackCount: 5
-      attackDelay: 0.7
-      spawnPoint: {fileID: 0}
-    - attackName: AreaAttackH
-      attackCount: 1
-      attackDelay: 3
-      spawnPoint: {fileID: 1544359239}
-    - attackName: HomingMissile
-      attackCount: 2
-      attackDelay: 0.15
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 5
-      attackDelay: 0.7
-      spawnPoint: {fileID: 0}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 5
-      attackDelay: 0.8
-      spawnPoint: {fileID: 0}
-    waveDelay: 3
-  - waveName: HARD
-    waveAttacks:
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 478561091}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 1609317095}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 1818168671}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 3
-      spawnPoint: {fileID: 1683064235}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 1868207971}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 2095285394}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 1946619347}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 5
-      spawnPoint: {fileID: 693339877}
-    - attackName: FastBullet
-      attackCount: 8
-      attackDelay: 0.5
-      spawnPoint: {fileID: 0}
-    - attackName: AreaAttackH
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 12521445}
-    - attackName: AreaAttackH
-      attackCount: 1
-      attackDelay: 2
-      spawnPoint: {fileID: 1544359239}
-    - attackName: FastBullet
-      attackCount: 8
-      attackDelay: 0.1
-      spawnPoint: {fileID: 0}
-    - attackName: LineSweep
-      attackCount: 8
-      attackDelay: 2
-      spawnPoint: {fileID: 0}
-    - attackName: AreaAttackV
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 1585258987}
-    - attackName: AreaAttackV
-      attackCount: 1
-      attackDelay: 2
-      spawnPoint: {fileID: 1618799906}
-    - attackName: FastBullet
-      attackCount: 8
-      attackDelay: 0.25
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 2
-      spawnPoint: {fileID: 0}
-    - attackName: HomingMissile
-      attackCount: 4
-      attackDelay: 0.05
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 10
-      attackDelay: 0.3
-      spawnPoint: {fileID: 0}
-    waveDelay: 5
-  - waveName: FINALE
-    waveAttacks:
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 478561091}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 1609317095}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 1818168671}
-    - attackName: LineSweep
-      attackCount: 1
-      attackDelay: 3
-      spawnPoint: {fileID: 1683064235}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 478561091}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 1946619347}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 1299173307}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 1683064235}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 1147292039}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 693339877}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 1609317095}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 2095285394}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 435206433}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 1818168671}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 152600330}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.2
-      spawnPoint: {fileID: 1868207971}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 1
-      spawnPoint: {fileID: 478561091}
-    - attackName: HomingMissile
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 1946619347}
-    - attackName: HomingMissile
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 1147292039}
-    - attackName: HomingMissile
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 2095285394}
-    - attackName: HomingMissile
-      attackCount: 1
-      attackDelay: 0
-      spawnPoint: {fileID: 152600330}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.15
-      spawnPoint: {fileID: 478561091}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.15
-      spawnPoint: {fileID: 1683064235}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.15
-      spawnPoint: {fileID: 1609317095}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 0.15
-      spawnPoint: {fileID: 1818168671}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 2
-      spawnPoint: {fileID: 478561091}
-    - attackName: FastBullet
-      attackCount: 6
-      attackDelay: 0.1
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 6
-      attackDelay: 0.2
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 6
-      attackDelay: 0.4
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 6
-      attackDelay: 0.8
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 2
-      attackDelay: 1
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 1.5
-      spawnPoint: {fileID: 0}
-    - attackName: FastBullet
-      attackCount: 1
-      attackDelay: 2
-      spawnPoint: {fileID: 0}
-    waveDelay: 3
+  endlessWavePool:
+  - waveName: BulletSmall
+    waveAttacks: []
+    waveDelay: 0
+  - waveName: BulletMedium
+    waveAttacks: []
+    waveDelay: 0
+  - waveName: BulletLarge
+    waveAttacks: []
+    waveDelay: 0
+  - waveName: Walls
+    waveAttacks: []
+    waveDelay: 0
+  - waveName: BulletWallHybrid
+    waveAttacks: []
+    waveDelay: 0
+  - waveName: MissileBulletPattern
+    waveAttacks: []
+    waveDelay: 0
+  endlessWaveDelay: 2
+  difficultyScaling: 1.05
 --- !u!4 &826903503
 Transform:
   m_ObjectHideFlags: 0
@@ -2540,7 +2409,7 @@ RectTransform:
   - {fileID: 951907889}
   - {fileID: 596945532}
   - {fileID: 448922710}
-  - {fileID: 1948026719}
+  - {fileID: 800589202}
   m_Father: {fileID: 104410170}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3574,145 +3443,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 999652795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1948026718
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1948026719}
-  - component: {fileID: 1948026721}
-  - component: {fileID: 1948026720}
-  m_Layer: 5
-  m_Name: Version
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1948026719
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948026718}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1349704202}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 360, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1948026720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948026718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 'ParryDodge v0.9
-
-
-'
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5ed86559efa97a24686b884b2ae59be6, type: 2}
-  m_sharedMaterial: {fileID: -3884857614528661167, guid: 5ed86559efa97a24686b884b2ae59be6, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 48
-  m_fontSizeBase: 48
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1948026721
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1948026718}
-  m_CullTransparentMesh: 1
 --- !u!1 &2053704086
 GameObject:
   m_ObjectHideFlags: 0

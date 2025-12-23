@@ -10,7 +10,7 @@ public class PlayerStats // variable stats class object
     public string gameState = "Play";
     public int totalDeaths;
     public int totalCompletions;
-    public string lastWaveDiedOn = "";
+    public int stageProgression = 0;
     public int totalParries;
     public int totalDodges;
 }
@@ -24,8 +24,6 @@ public class StatsManager : MonoBehaviour
     private const string PlayerIdKey = "PlayerID";
     private const string StatsKey = "PlayerStats";
     private string _playerID;
-
-    public bool replayTutorial = false;
 
     private void Awake() // init singleton
     {
@@ -60,21 +58,22 @@ public class StatsManager : MonoBehaviour
         if (pause && _ui != null)
         {
             _stats.gameState = "Paused/Closing";
-            RecordFull(_ui.GetCurrentWaveName()); // pause data collection hook
+            RecordFull(); // pause data collection hook
             SaveStats();
         }
     }
 
     // --- general stats ---
-    public void RecordFull(string waveName)
+    public void RecordFull()
     {
+        _stats.stageProgression = StageManager.Instance.GetHighestClearedStage();
         SaveStats();
         var parameters = new Dictionary<string, object> // params for sending as event or to logs
         {
             { "player_id", _playerID }, // identifier
             { "time", Time.time }, // current time
-            { "game_state", _stats.gameState}, // state (paused/dead/quit)
-            { "wave_name", waveName }, // last wave detected
+            { "game_state", _stats.gameState }, // state (paused/dead/quit)
+            { "highest_cleared_stage", _stats.stageProgression },
             { "total_deaths", _stats.totalDeaths },
             { "total_parries", _stats.totalParries },
             { "total_dodges", _stats.totalDodges },
@@ -114,9 +113,8 @@ public class StatsManager : MonoBehaviour
     {
         _stats.totalDeaths++;
         _stats.gameState = "Death";
-        _stats.lastWaveDiedOn = waveName;
         SaveStats();
-        RecordFull(waveName);
+        RecordFull();
     }
 
     public PlayerStats GetStats() => _stats; // get stats helper (for possible custom events)

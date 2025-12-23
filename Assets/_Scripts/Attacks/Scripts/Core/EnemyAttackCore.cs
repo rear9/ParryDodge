@@ -59,7 +59,7 @@ public abstract class EnemyAttackCore : MonoBehaviour
                 health.TakeDamage((stats.damage > 0 ? stats.damage : 1));
             }
         }
-        else if (layer == LayerMask.NameToLayer("PlayerDodge"))
+        else if (layer == LayerMask.NameToLayer("PlayerDodge")) // this is inside enemy attack core script
         {
             if (_playerHit) return;
             _playerHit = true;

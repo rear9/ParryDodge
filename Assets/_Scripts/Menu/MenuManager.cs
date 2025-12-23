@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class MenuManager : MonoBehaviour
 {
+    [SerializeField] private StageUI stageSelectionUI;
     [SerializeField] private UIButtonSFX UIButtonSFX;
     [SerializeField] private Button playButton;
     [SerializeField] private Button quitButton;
@@ -27,7 +28,7 @@ public class MenuManager : MonoBehaviour
     {
         Cursor.visible = true;
         
-        playButton.onClick.AddListener(GameManager.Instance.StartGame);
+        playButton.onClick.AddListener(() => stageSelectionUI.OpenStageSelection());
         quitButton.onClick.AddListener(GameManager.Instance.QuitGame);
         
         if (tutorialToggle != null) // tutorial setup

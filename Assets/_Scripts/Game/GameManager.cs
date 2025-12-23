@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator QuitCoroutine() // coroutine to allow for a proper fade out on quit
     {
-        StatsManager.Instance.RecordFull("Menu");
+        StatsManager.Instance.RecordFull();
         yield return StartCoroutine(TransitionHandler.Instance.FadeOut());
         #if UNITY_EDITOR // quit play mode if in editor
                 EditorApplication.isPlaying = false;
@@ -163,6 +163,6 @@ public class GameManager : MonoBehaviour
 
     private void MenuSave() // to save when player returns to menu from pause
     {
-        StatsManager.Instance.RecordFull("Menu");
+        StatsManager.Instance.RecordFull();
     }
 }
